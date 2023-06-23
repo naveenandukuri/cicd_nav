@@ -4,7 +4,7 @@ pipeline(){
         stage("git"){
             steps{
                 script{
-                    sh '''echo passed'''
+                    checkout scmGit(branches: [[name: '*/fet1']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/naveenandukuri/cicd_nav.git']])
                 }
             }
         }
