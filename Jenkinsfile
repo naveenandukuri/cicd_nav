@@ -8,5 +8,14 @@ pipeline(){
                 }
             }
         }
+        stage("sonar quality"){
+            steps{
+                script{
+                    withSonarQubeEnv(credentialsId: 'SONAR_CRED') {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
     }
 }
