@@ -4,7 +4,7 @@ pipeline(){
         stage("git"){
             steps{
                 script{
-                    checkout scmGit(branches: [[name: '*/fet1']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/naveenandukuri/cicd_nav.git']])
+                    sh 'echo passed'
                 }
             }
         }
@@ -16,6 +16,11 @@ pipeline(){
             }
         }
         stage("sonar quality"){
+            agent {
+                docker {
+                    image 'maven'
+                }
+            }
             steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'SONAR_CRED') {
