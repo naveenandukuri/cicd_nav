@@ -8,6 +8,13 @@ pipeline(){
                 }
             }
         }
+        stage("maven"){
+            steps{
+                script{
+                    sh 'mvn clean package'
+                }
+            }
+        }
         stage("sonar quality"){
             steps{
                 script{
