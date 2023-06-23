@@ -18,7 +18,7 @@ pipeline(){
         stage("sonar quality"){
             agent {
                 docker {
-                    image 'maven'
+                    image 'maven:3.6.3-openjdk-11'
                     args '-u root'
                 }
             }
