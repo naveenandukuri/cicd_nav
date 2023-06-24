@@ -4,6 +4,6 @@ COPY . .
 RUN mvn clean package
 FROM openjdk:11.0 as run
 WORKDIR /app
-COPY --from=build webapp/target/webapp.jar /app
+COPY --from=build /app/webapp/target/webapp.war /app
 EXPOSE 8080
-CMD ["java","-jar","webapp.jar"]
+CMD ["java","-war","webapp.war"]
