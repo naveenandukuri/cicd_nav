@@ -4,6 +4,7 @@ pipeline(){
         imageName="maven-project"
         registeryCredentials= "NEXUS_CREDENTIALS"
         registry="3.142.150.13:8082/"
+        dockerImage= ''
     }
     stages{
         stage("git"){
@@ -35,17 +36,15 @@ pipeline(){
         stage('docker'){
             steps{
                 script{
-                    sh 'docker build -t maven-project:latest .'
+                    dockerImage = docker.build imageName
                 }
             }
         }
         stage("upload docker image"){
             steps{
-                script{
-                    withDockerRegistry(credentialsId: 'NEXUS_CREDENTIALS', url: 'http://3.142.150.13:8082/') {
-                        def customImage = docker.build("imageName:${env.BUILD_ID}")
-
-                        customImage.push()
+                script {
+                    docker.withRegistry( 'http://'+registry, registryCredentials ) {
+                     dockerImage.push('latest')
                     }
                 }
             }
