@@ -1,5 +1,10 @@
 pipeline(){
     agent any
+    environment{
+        imageName="maven-project"
+        registeryCredentials= "NEXUS_CREDENTIALS"
+        registry="3.142.150.13:8082/"
+    }
     stages{
         stage("git"){
             steps{
@@ -31,6 +36,17 @@ pipeline(){
             steps{
                 script{
                     sh 'docker build -t maven-project:latest .'
+                }
+            }
+        }
+        stage("upload docker image"){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'NEXUS_CREDENTIALS', url: 'http://3.142.150.13:8082/') {
+                        def customImage = docker.build("imageName:${env.BUILD_ID}")
+
+                        customImage.push()
+                    }
                 }
             }
         }
