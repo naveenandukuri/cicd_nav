@@ -43,8 +43,7 @@ pipeline(){
         stage("upload docker image"){
             steps{
                  script {
-                    checkout scm
-
+                    
                     docker.withRegistry('http://'+registry, registryCredentials) {
 
                         def customImage = docker.build("imageName:${env.BUILD_ID}")
