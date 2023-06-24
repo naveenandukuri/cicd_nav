@@ -44,13 +44,10 @@ pipeline(){
             steps{
                  script {
                     
-                    docker.withRegistry('http://'+registry, registryCredentials) {
-
-                        def customImage = docker.build("imageName:${env.BUILD_ID}")
-
-                        /* Push the container to the custom Registry */
-                        customImage.push()
-                    }
+                    sh 'docker login -u admin -p admin http://3.142.150.13:8082/'
+                    sh 'docker push http://3.142.150.13:8082/"imageName:${env.BUILD_ID}"'
+                    sh 'docker rmi $(docker images --filter=reference="http://3.142.150.13:8082/ImageName*" -q)'
+                    sh 'docker logout http://3.142.150.13:8082/'
                 }
             }
         }
