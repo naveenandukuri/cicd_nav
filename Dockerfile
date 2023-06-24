@@ -1,4 +1,4 @@
-FROM mvn as build
+FROM maven as build
 WORKDIR /app
 COPY . .
 RUN mvn clean package
