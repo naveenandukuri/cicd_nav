@@ -23,7 +23,14 @@ pipeline(){
             steps{
                 script{
                     sh 'mvn clean package'
-                    sh 'docker build -t maven-project .'
+                    
+                }
+            }
+        }
+        stage('docker'){
+            steps{
+                script{
+                    sh 'docker build -t maven-project:latest .'
                 }
             }
         }
