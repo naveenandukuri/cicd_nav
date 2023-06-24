@@ -8,6 +8,7 @@ pipeline(){
                 }
             }
         }
+        
         stage("sonar quality"){
             
             steps{
@@ -15,6 +16,13 @@ pipeline(){
                     withSonarQubeEnv(credentialsId: 'SONAR_CRED') {
                         sh 'mvn sonar:sonar'
                     }
+                }
+            }
+        }
+        stage("mvn build"){
+            steps{
+                script{
+                    sh 'mvn clean package'
                 }
             }
         }
