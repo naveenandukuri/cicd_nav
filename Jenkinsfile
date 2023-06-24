@@ -43,8 +43,14 @@ pipeline(){
         stage("upload docker image"){
             steps{
                  script {
-                    docker.withRegistry( 'http://'+registry, registryCredentials ) {
-                    dockerImage.push('latest')
+                    checkout scm
+
+                    docker.withRegistry('http://'+registry, registryCredentials) {
+
+                        def customImage = docker.build("imageName:${env.BUILD_ID}")
+
+                        /* Push the container to the custom Registry */
+                        customImage.push()
                     }
                 }
             }
