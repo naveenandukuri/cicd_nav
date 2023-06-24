@@ -1,7 +1,7 @@
-FROM maven as build
+FROM mvn as build
 WORKDIR /app
 COPY . .
-RUN mvn install
+RUN mvn clean package
 FROM openjdk:11.0 as run
 WORKDIR /app
 COPY --from=build /app/webapp/target/webapp.jar /app
