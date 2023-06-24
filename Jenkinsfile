@@ -8,13 +8,6 @@ pipeline(){
                 }
             }
         }
-        stage("maven"){
-            steps{
-                script{
-                    sh 'mvn clean package'
-                }
-            }
-        }
         stage("sonar quality"){
             agent {
                 docker {
